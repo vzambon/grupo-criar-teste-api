@@ -1,0 +1,113 @@
+services:
+  laravel:
+    container_name: ${APP_NAME}-laravel
+    image: ${APP_NAME}/laravel
+    build:
+      context: .
+      args:
+        - USER_ID=${USER_ID:-1000}
+        - GROUP_ID=${GROUP_ID:-1000}
+    networks:
+      - internal
+    expose:
+      - 6001
+    volumes:
+      - '../../:/var/www'
+      - '/home/fherat/Develop/Personal/laravel-discord-logging:/var/packages/laravel-discord-logging'
+      - 'laravel_storage:/var/www/storage'
+      - './supervisor.conf:/etc/supervisor.conf'
+      - '/home/${HOST_USER}/.ssh:/home/laravel/.ssh'
+      - '/home/${HOST_USER}/.zshrc:/home/laravel/.zshrc'
+      - '/home/${HOST_USER}/.oh-my-zsh:/home/laravel/.oh-my-zsh'
+    deploy:
+      resources:
+        reservations:
+          cpus: '1'
+          memory: 1gb
+  nginx:
+    container_name: ${APP_NAME}-nginx
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/app.conf.template:/etc/nginx/templates/app.conf.template:ro'
+    networks:
+      - internal
+      - spa_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  redis:
+    container_name: ${APP_NAME}-redis
+    image: redis
+    networks:
+      - internal
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379 # must have a firewall policy
+  meilisearch:
+    container_name: ${APP_NAME}-meilisearch
+    image: getmeili/meilisearch
+    volumes:
+      - meili-data:/meili_data
+    ports:
+      - 7700:7700
+    environment:
+      - MEILI_MASTER_KEY=${MEILISEARCH_KEY}
+    networks:
+      - internal
+  mysql:
+    container_name: ${APP_NAME}-mysql
+    image: mysql:8.0
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'mysql-db:/var/lib/mysql'
+    networks:
+      - internal
+    deploy:
+      resources:
+        reservations:
+          cpus: '1'
+          memory: 1gb
+  pdf:
+    container_name: ${APP_NAME}-pdf
+    image: gotenberg/gotenberg:8
+    command:
+      - "gotenberg"
+      - "--api-port=${GOTENBERG_PORT}"
+      - "--chromium-auto-start=true"
+      - "--chromium-ignore-certificate-errors=true"
+      - "--chromium-disable-web-security=true"
+      - "--chromium-allow-insecure-localhost"
+      - "--libreoffice-disable-routes"
+      - "--pdfengines-disable-routes"
+      - "&& apt iputils-ping -y"
+    ports:
+      - 3000:3000
+    networks:
+      - internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "web.localhost.com:host-gateway"
+networks:
+  internal:
+    driver: bridge
+  spa_network:
+    driver: bridge
+volumes:
+  mysql-db:
+    name: ${APP_NAME}-mysql-db
+  meili-data:
+    name: ${APP_NAME}-meili-data
+  redis_data:
+    name: ${APP_NAME}-redis_data
+  laravel_storage:
+    name: ${APP_NAME}-laravel_storage

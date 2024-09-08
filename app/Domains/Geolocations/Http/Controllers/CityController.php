@@ -13,49 +13,7 @@ class CityController extends Controller
      */
     public function index(Request $request)
     {
-        $pagination = $request->input('pagination');
-
-        $select = $request->input('select');
-
-        $search = $request->input('search', []);
-
-        $query = City::query();
-
-        if ($select) {
-            $query->select(explode(',', $select));
-        }
-
-        $searchTermKeys = [];
-        foreach ($search as $key => $value) {
-            if (collect(City::getSearchable())->contains($key)) {
-                $searchTermKeys[] = $key;
-                continue;
-            }
-
-            $query->where($key, $value);
-        }
-
-        if (! empty($searchTermKeys)) {
-            $query->searchByFields($searchTermKeys, collect($searchTermKeys)->map(fn ($el) => $request->input($el))->toArray());
-        }
-
-        if($pagination){
-            if ($pagination['sortBy'] ?? false) {
-                $desc = filter_var($pagination['descending'] ?? 'false', FILTER_VALIDATE_BOOLEAN) ?? false;
-                $query->orderBy($pagination['sortBy'], $desc ? 'desc' : 'asc');
-            }
-    
-            $response = $query->paginate($pagination['rowsPerPage'] ?? null, ['*'], 'page', $pagination['page'] ?? null)->toArray();
-    
-            if ($pagination['sortBy'] ?? false) {
-                $response['sortBy'] = $pagination['sortBy'] ?? 'id';
-                $response['descending'] = filter_var($pagination['descending'] ?? 'false', FILTER_VALIDATE_BOOLEAN);
-            }
-
-            return $response;
-        }
-
-        return $query->get();
+        return $this->searchIndex(City::class, $request);
     }
 
     /**
@@ -67,7 +25,7 @@ class CityController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Toggle status (is_active) of specified resource.
      */
     public function toggleStatus(City $city)
     {

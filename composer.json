@@ -23,7 +23,11 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Geolocations\\": "app/Domains/Geolocations",
+            "Products\\": "app/Domains/Products",
+            "Campaigns\\": "app/Domains/Campaigns",
+            "Users\\": "app/Domains/Users"
         }
     },
     "autoload-dev": {

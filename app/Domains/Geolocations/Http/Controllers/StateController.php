@@ -3,6 +3,7 @@
 namespace App\Domains\Geolocations\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Geolocations\Models\State;
 use Illuminate\Http\Request;
 
 class StateController extends Controller
@@ -10,40 +11,29 @@ class StateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->searchIndex(State::class, $request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(State $state)
     {
-        //
+        return $state;
     }
 
     /**
-     * Update the specified resource in storage.
+     * Toggle status (is_active) of specified resource.
      */
-    public function update(Request $request, string $id)
+    public function toggleStatus(State $state)
     {
-        //
+        $state->is_active = !$state->is_active;
+
+        $state->save();
+
+        return response()->json(['message' => 'State status updated successfully!']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

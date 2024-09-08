@@ -77,26 +77,6 @@ services:
         reservations:
           cpus: '1'
           memory: 1gb
-  pdf:
-    container_name: ${APP_NAME}-pdf
-    image: gotenberg/gotenberg:8
-    command:
-      - "gotenberg"
-      - "--api-port=${GOTENBERG_PORT}"
-      - "--chromium-auto-start=true"
-      - "--chromium-ignore-certificate-errors=true"
-      - "--chromium-disable-web-security=true"
-      - "--chromium-allow-insecure-localhost"
-      - "--libreoffice-disable-routes"
-      - "--pdfengines-disable-routes"
-      - "&& apt iputils-ping -y"
-    ports:
-      - 3000:3000
-    networks:
-      - internal
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-      - "web.localhost.com:host-gateway"
 networks:
   internal:
     driver: bridge

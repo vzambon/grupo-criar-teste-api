@@ -2,7 +2,7 @@
 
 namespace Geolocations\Models;
 
-use App\Builders\MeiliBuilder as BuildersMeiliBuilder;
+use App\Builders\MeiliBuilder;
 use Database\Factories\CityFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,7 +40,7 @@ class City extends Model
 
     public function newEloquentBuilder($query)
     {
-        return new BuildersMeiliBuilder($query);
+        return new MeiliBuilder($query);
     }
 
     public static function getSearchable(): array

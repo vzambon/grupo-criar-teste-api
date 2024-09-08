@@ -50,12 +50,9 @@ class CityTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertDatabaseCount('cities', 1);
-        $this->assertDatabaseHas('cities', [
-            'id' => $city->id,
-            'name' => $city->name,
-            'state_id' => $city->state_id,
-        ]);
+        $table = (new City())->getTable();
+        $this->assertDatabaseCount($table, 1);
+        $this->assertDatabaseHas($table, $city->toArray());
 
         $response->assertJson($city->toArray());
     }

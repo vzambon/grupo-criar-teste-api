@@ -31,5 +31,5 @@ Route::prefix('clusters')
     Route::get('{cluster}', 'show')->name('.show');
     Route::patch('{cluster}', 'toggleStatus')->name('.toggle-status');
     Route::post('', 'store')->name('.store');
-    Route::delete('{cluster}', 'destroy')->name('.destroy');
+    Route::delete('{id}', 'destroy')->name('.destroy');
 });

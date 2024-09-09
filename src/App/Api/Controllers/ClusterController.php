@@ -51,9 +51,9 @@ class ClusterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cluster $cluster)
+    public function destroy(string $id)
     {
-        $cluster->delete();
+        Cluster::where('id', $id)->delete();
 
         return response()->json(['message' => 'Cluster deleted successfully!']);
     }

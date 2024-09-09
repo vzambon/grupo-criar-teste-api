@@ -22,23 +22,24 @@ abstract class Controller
         foreach ($search as $key => $value) {
             if (collect($model::getSearchable())->contains($key)) {
                 $searchTerm = $searchTerm->merge($search);
+
                 continue;
             }
 
             $query->where($key, $value);
         }
-        if (!$searchTerm->isEmpty()) {
+        if (! $searchTerm->isEmpty()) {
             $query->searchByFields($searchTerm->keys()->toArray(), $searchTerm->values()->toArray());
         }
 
-        if($pagination) {
+        if ($pagination) {
             if ($pagination['sortBy'] ?? false) {
                 $desc = filter_var($pagination['descending'] ?? 'false', FILTER_VALIDATE_BOOLEAN) ?? false;
                 $query->orderBy($pagination['sortBy'], $desc ? 'desc' : 'asc');
             }
-    
+
             $response = $query->paginate($pagination['rowsPerPage'] ?? null, ['*'], 'page', $pagination['page'] ?? null)->toArray();
-    
+
             if ($pagination['sortBy'] ?? false) {
                 $response['sortBy'] = $pagination['sortBy'] ?? 'id';
                 $response['descending'] = filter_var($pagination['descending'] ?? 'false', FILTER_VALIDATE_BOOLEAN);

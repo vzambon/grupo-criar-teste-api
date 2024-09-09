@@ -15,18 +15,18 @@ class IbgeCitySeed extends Seeder
     public function run(): void
     {
         $states = State::all()->pluck('id');
-        foreach($states as $stateId){
+        foreach ($states as $stateId) {
             $cities = [];
 
-            if(app()->environment('production')){
+            if (app()->environment('production')) {
                 $response = Http::get("https://servicodados.ibge.gov.br/api/v1/localidades/estados/{$stateId}/municipios");
-        
-                $cities = $response->collect()->map(fn($el) => [
+
+                $cities = $response->collect()->map(fn ($el) => [
                     'id' => $el['id'],
                     'name' => $el['nome'],
                     'state_id' => $stateId,
                 ])->toArray();
-            } else{
+            } else {
                 $cities = City::factory(10)->make(['state_id' => $stateId])->toArray();
             }
 

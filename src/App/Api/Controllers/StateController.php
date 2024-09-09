@@ -28,11 +28,10 @@ class StateController extends Controller
      */
     public function toggleStatus(State $state)
     {
-        $state->is_active = !$state->is_active;
+        $state->is_active = ! $state->is_active;
 
         $state->save();
 
         return response()->json(['message' => 'State status updated successfully!']);
     }
-
 }

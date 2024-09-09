@@ -28,7 +28,7 @@ class CityController extends Controller
      */
     public function toggleStatus(City $city)
     {
-        $city->is_active = !$city->is_active;
+        $city->is_active = ! $city->is_active;
 
         $city->save();
 

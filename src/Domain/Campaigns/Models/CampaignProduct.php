@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CampaignProduct extends Pivot
 {
-    protected $table = 'campaign_product_pivot'; 
+    protected $table = 'campaign_product_pivot';
 
     public $incrementing = true;
 

@@ -18,9 +18,9 @@ class Product extends Model
         'name',
         'price',
         'description',
-        'image_url'
+        'image_url',
     ];
-    
+
     /**
      * Create a new factory instance for the model.
      */

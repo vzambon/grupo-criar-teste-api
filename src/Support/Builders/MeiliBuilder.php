@@ -13,12 +13,11 @@ class MeiliBuilder extends EloquentBuilder
         $index = $client->index($this->model->searchableAs());
         $index->resetSearchableAttributes();
 
-        
         $results = collect();
         foreach ($fields as $key => $field) {
             $index->updateSearchableAttributes([$field]);
 
-            while($index->getSearchableAttributes() !== [$field]) {
+            while ($index->getSearchableAttributes() !== [$field]) {
                 usleep(20000);
             }
 

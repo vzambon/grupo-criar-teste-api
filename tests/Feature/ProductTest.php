@@ -17,7 +17,7 @@ class ProductTest extends TestCase
     public function test_can_list_products()
     {
         Product::factory(5)->create();
-        
+
         $response = $this->get(route('products.index'));
 
         $response->assertOk()->assertJsonCount(5);
@@ -36,7 +36,7 @@ class ProductTest extends TestCase
             'name' => $this->faker->name,
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'description' => $this->faker->text(),
-            'image_url' => $file->getFilename()
+            'image_url' => $file->getFilename(),
         ];
 
         $response = $this->post(route('products.store'), $payload);
@@ -68,20 +68,20 @@ class ProductTest extends TestCase
     {
         Storage::fake('temp');
         Storage::fake('private');
-        
+
         $file = UploadedFile::fake()->image('mock_image.png');
 
         $file_path = 'products/img/'.$file->getFilename();
         Storage::disk('private')->put($file_path, $file);
         Storage::disk('temp')->put($file->getFilename(), $file);
-        
+
         $product = Product::factory()->state(['image_url' => $file_path])->create();
 
         $payload = [
             'name' => $this->faker->name,
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'description' => $this->faker->text(),
-            'image_url' => $file->getFilename()
+            'image_url' => $file->getFilename(),
         ];
 
         $response = $this->put(route('products.update', ['product' => $product->id]), $payload);
@@ -102,6 +102,6 @@ class ProductTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertDatabaseEmpty((new Product)->getTable());
+        $this->assertDatabaseEmpty((new Product())->getTable());
     }
 }

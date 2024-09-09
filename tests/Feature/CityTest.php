@@ -5,17 +5,16 @@ namespace Tests\Feature;
 use Geolocations\Models\City;
 use Geolocations\Models\State;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CityTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_can_list_cities()
     {
         City::factory()->for(State::factory())->count(5)->create();
-        
+
         $response = $this->get(route('cities.index'));
 
         $response->assertOk()->assertJsonCount(5);
@@ -24,18 +23,18 @@ class CityTest extends TestCase
     public function test_can_paginate_citiy()
     {
         City::factory()->for(State::factory())->count(5)->create();
-        
+
         $response = $this->getJson(route('cities.index', [
             'pagination' => [
                 'sortBy' => 'name',
-            ]
+            ],
         ]));
 
         $response->assertOk()
             ->assertJsonStructure([
                 'current_page',
                 'data' => [
-                    '*' => ['id', 'name', 'is_active', 'state_id', 'created_at', 'updated_at']
+                    '*' => ['id', 'name', 'is_active', 'state_id', 'created_at', 'updated_at'],
                 ],
                 'sortBy',
                 'descending',
@@ -68,7 +67,7 @@ class CityTest extends TestCase
         $response = $this->get(route('cities.index', [
             'search' => [
                 'name' => $cities->first()->name,
-            ]
+            ],
         ]));
 
         $response->assertOk();
@@ -87,14 +86,14 @@ class CityTest extends TestCase
         $response1->assertOk();
         $response2->assertOk();
 
-        $this->assertDatabaseCount((new City)->getTable(), 2);
-        $this->assertDatabaseHas((new City)->getTable(), [
+        $this->assertDatabaseCount((new City())->getTable(), 2);
+        $this->assertDatabaseHas((new City())->getTable(), [
             'id' => $cityTrue->id,
-            'is_active' => false
+            'is_active' => false,
         ]);
-        $this->assertDatabaseHas((new City)->getTable(), [
+        $this->assertDatabaseHas((new City())->getTable(), [
             'id' => $cityFalse->id,
-            'is_active' => true
+            'is_active' => true,
         ]);
     }
 }

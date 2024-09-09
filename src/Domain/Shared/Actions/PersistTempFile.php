@@ -21,13 +21,13 @@ class PersistTempFile
         $path = "{$this->toPath}/{$fileName}";
 
         try {
-            if(!Storage::disk('temp')->exists($this->temp->name)){
+            if (! Storage::disk('temp')->exists($this->temp->name)) {
                 throw new \Exception('Failed to move file');
             }
 
             Storage::disk('private')->put($path, Storage::disk('temp')->get($this->temp->name));
             Storage::disk('temp')->delete($this->temp->name);
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return false;
         }
 

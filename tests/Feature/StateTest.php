@@ -18,24 +18,24 @@ class StateTest extends TestCase
 
         $response->assertOk()->assertJsonCount(5);
 
-        $this->assertDatabaseCount((new State)->getTable(), 5);
+        $this->assertDatabaseCount((new State())->getTable(), 5);
     }
 
     public function test_can_paginate_states()
     {
         State::factory()->count(10)->create();
-        
+
         $response = $this->getJson(route('states.index', [
             'pagination' => [
                 'sortBy' => 'name',
-            ]
+            ],
         ]));
 
         $response->assertOk()
             ->assertJsonStructure([
                 'current_page',
                 'data' => [
-                    '*' => ['id', 'name', 'acronym', 'is_active', 'created_at', 'updated_at']
+                    '*' => ['id', 'name', 'acronym', 'is_active', 'created_at', 'updated_at'],
                 ],
                 'sortBy',
                 'descending',
@@ -54,7 +54,7 @@ class StateTest extends TestCase
 
         $response->assertJson($state->toArray());
 
-        $table = (new State)->getTable();
+        $table = (new State())->getTable();
         $this->assertDatabaseCount($table, 1);
         $this->assertDatabaseHas($table, $state->toArray());
     }
@@ -68,7 +68,7 @@ class StateTest extends TestCase
         $response = $this->get(route('states.index', [
             'search' => [
                 'name' => $states->first()->name,
-            ]
+            ],
         ]));
 
         $response->assertOk();
@@ -87,15 +87,14 @@ class StateTest extends TestCase
         $response1->assertOk();
         $response2->assertOk();
 
-        $this->assertDatabaseCount((new state)->getTable(), 2);
-        $this->assertDatabaseHas((new state)->getTable(), [
+        $this->assertDatabaseCount((new state())->getTable(), 2);
+        $this->assertDatabaseHas((new state())->getTable(), [
             'id' => $stateTrue->id,
-            'is_active' => false
+            'is_active' => false,
         ]);
-        $this->assertDatabaseHas((new state)->getTable(), [
+        $this->assertDatabaseHas((new state())->getTable(), [
             'id' => $stateFalse->id,
-            'is_active' => true
+            'is_active' => true,
         ]);
     }
-
 }

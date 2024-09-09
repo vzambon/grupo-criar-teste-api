@@ -25,6 +25,5 @@ class SyncIbgeStates extends Command
      */
     public function handle()
     {
-        
     }
 }

@@ -25,6 +25,5 @@ class SyncIbgeCities extends Command
      */
     public function handle()
     {
-        
     }
 }

@@ -13,7 +13,7 @@ class ClusterController extends Controller
      */
     public function index()
     {
-        return Cache::rememberForever('clusters', fn() => Cluster::all());
+        return Cache::rememberForever('clusters', fn () => Cluster::all());
     }
 
     /**
@@ -41,7 +41,7 @@ class ClusterController extends Controller
      */
     public function toggleStatus(Cluster $cluster)
     {
-        $cluster->is_active = !$cluster->is_active;
+        $cluster->is_active = ! $cluster->is_active;
 
         $cluster->save();
 

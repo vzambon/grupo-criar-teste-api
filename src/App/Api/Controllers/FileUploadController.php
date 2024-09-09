@@ -2,7 +2,6 @@
 
 namespace App\Api\Controllers;
 
-use App\Api\Controllers\Controller;
 use Domain\Shared\Actions\SaveTempFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -12,7 +11,7 @@ class FileUploadController extends Controller
     /**
      * Realiza upload de arquivo
      *
-     * @param  mixed $request
+     * @param  mixed  $request
      * @return void
      */
     public function __invoke(Request $request)
@@ -25,7 +24,7 @@ class FileUploadController extends Controller
 
         return response()->json([
             'filename' => $tempFile->name,
-            'temp_url' => URL::signedRoute('private-storage', ['disk' => 'temp', 'filePath' => $tempFile->name], null, false)
+            'temp_url' => URL::signedRoute('private-storage', ['disk' => 'temp', 'filePath' => $tempFile->name], null, false),
         ]);
     }
 }

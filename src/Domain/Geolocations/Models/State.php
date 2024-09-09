@@ -2,13 +2,13 @@
 
 namespace Geolocations\Models;
 
-use Support\Builders\MeiliBuilder;
 use Database\Factories\StateFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
+use Support\Builders\MeiliBuilder;
 
 class State extends Model
 {
@@ -28,7 +28,7 @@ class State extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     /**

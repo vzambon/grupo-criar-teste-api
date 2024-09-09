@@ -26,7 +26,7 @@ class ClusterStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'cities' => ['array', 'required'],
-            'cities.*' => ['int', 'exists:cities,id', UniqueInRelation::make(City::class, 'cluster', 'city_id')]
+            'cities.*' => ['int', 'exists:cities,id', UniqueInRelation::make(City::class, 'cluster', 'city_id')],
         ];
     }
 }

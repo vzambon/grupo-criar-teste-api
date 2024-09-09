@@ -17,7 +17,7 @@ class CityClusterTest extends TestCase
     public function test_can_list_clusters()
     {
         Cluster::factory()->has(City::factory(5)->for(State::factory()))->count(5)->create();
-        
+
         $response = $this->get(route('clusters.index'));
 
         $response->assertOk()->assertJsonCount(5);
@@ -36,7 +36,7 @@ class CityClusterTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseCount((new Cluster())->getTable(), 1);
-        $cities->each(fn($el) => $this->assertDatabaseHas((new City)->getTable(), $el->toArray()));
+        $cities->each(fn ($el) => $this->assertDatabaseHas((new City())->getTable(), $el->toArray()));
     }
 
     public function test_city_can_be_added_to_only_one_cluster()
@@ -52,7 +52,7 @@ class CityClusterTest extends TestCase
         ];
 
         $response = $this->post(route('clusters.store'), $payload);
-        $response->assertInvalid('cities.'.$cities->count()-1);
+        $response->assertInvalid('cities.'.$cities->count() - 1);
     }
 
     public function test_cluster_can_be_shown()
@@ -80,15 +80,15 @@ class CityClusterTest extends TestCase
         $response1->assertOk();
         $response2->assertOk();
 
-        $table = (new Cluster)->getTable();
+        $table = (new Cluster())->getTable();
         $this->assertDatabaseCount($table, 2);
         $this->assertDatabaseHas($table, [
             'id' => $clusterTrue->id,
-            'is_active' => false
+            'is_active' => false,
         ]);
         $this->assertDatabaseHas($table, [
             'id' => $clusterFalse->id,
-            'is_active' => true
+            'is_active' => true,
         ]);
     }
 
@@ -100,6 +100,6 @@ class CityClusterTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertDatabaseEmpty((new Cluster)->getTable());
+        $this->assertDatabaseEmpty((new Cluster())->getTable());
     }
 }

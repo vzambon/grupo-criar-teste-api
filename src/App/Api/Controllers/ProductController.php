@@ -18,7 +18,7 @@ class ProductController
      */
     public function index()
     {
-        return Cache::rememberForever('products', fn() => Product::all());
+        return Cache::rememberForever('products', fn () => Product::all());
     }
 
     /**
@@ -28,10 +28,10 @@ class ProductController
     {
         $validated = $request->validated();
 
-        if(isset($validated['image_url'])){
+        if (isset($validated['image_url'])) {
             $tempFile = new TempFile($validated['image_url']);
-            $file = (new PersistTempFile($tempFile, "products/img", Str::uuid()))->execute();
-    
+            $file = (new PersistTempFile($tempFile, 'products/img', Str::uuid()))->execute();
+
             $validated['image_url'] = $file;
         }
 
@@ -53,14 +53,14 @@ class ProductController
     {
         $validated = $request->validated();
 
-        if($validated['image_url']){
+        if ($validated['image_url']) {
             $tempFile = new TempFile($validated['image_url']);
-            $file = (new PersistTempFile($tempFile, "products/img", Str::uuid()))->execute();
+            $file = (new PersistTempFile($tempFile, 'products/img', Str::uuid()))->execute();
 
-            if($file) {
+            if ($file) {
                 Storage::disk('private')->delete($product->image_url);
             }
-    
+
             $validated['image_url'] = $file;
         }
 

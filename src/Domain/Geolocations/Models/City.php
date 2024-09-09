@@ -2,7 +2,6 @@
 
 namespace Geolocations\Models;
 
-use Support\Builders\MeiliBuilder;
 use Database\Factories\CityFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
+use Support\Builders\MeiliBuilder;
 
 class City extends Model
 {
@@ -28,7 +28,7 @@ class City extends Model
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     /**

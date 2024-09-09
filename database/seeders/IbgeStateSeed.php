@@ -15,15 +15,15 @@ class IbgeStateSeed extends Seeder
     {
         $states = [];
 
-        if(app()->environment('production')){
+        if (app()->environment('production')) {
             $response = Http::get('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-    
-            $states = $response->collect()->map(fn($el) => [
+
+            $states = $response->collect()->map(fn ($el) => [
                 'id' => $el['id'],
                 'name' => $el['nome'],
-                'acronym' => $el['sigla']
+                'acronym' => $el['sigla'],
             ])->toArray();
-        } else{
+        } else {
             $states = State::factory(10)->make()->toArray();
         }
 

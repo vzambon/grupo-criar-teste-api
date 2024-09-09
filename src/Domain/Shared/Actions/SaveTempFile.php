@@ -17,7 +17,7 @@ class SaveTempFile
     {
         $tempFile = TempFile::fromFile($this->file);
 
-        if(Storage::disk('temp')->put($tempFile->name, $this->file)) {
+        if (Storage::disk('temp')->put($tempFile->name, $this->file)) {
             return $tempFile;
         }
 

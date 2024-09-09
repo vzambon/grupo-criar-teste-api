@@ -25,7 +25,7 @@ class TempFile
         );
     }
 
-    public function get(): string|null
+    public function get(): ?string
     {
         return Storage::disk('temp')->get("{$this->name}");
     }

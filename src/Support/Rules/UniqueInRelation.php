@@ -11,8 +11,7 @@ class UniqueInRelation implements ValidationRule
         protected readonly string $modelClass,
         protected readonly string $relationship,
         protected readonly array|string $foreign_id,
-    )
-    {
+    ) {
     }
 
     public static function make($modelClass, $relationship, $foreign_id)
@@ -27,10 +26,10 @@ class UniqueInRelation implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if($this->modelClass::whereHas($this->relationship, function ($query) use ($value) {
+        if ($this->modelClass::whereHas($this->relationship, function ($query) use ($value) {
             $query->where($this->foreign_id, $value);
         })->exists()) {
-            $fail("{$this->modelClass}({$value}) Must belong to only one ". $this->relationship);
+            $fail("{$this->modelClass}({$value}) Must belong to only one ".$this->relationship);
         }
     }
 }

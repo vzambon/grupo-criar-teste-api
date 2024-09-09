@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Api\Controllers;
 
 use App\Api\Controllers\Controller;
 use Domain\Shared\Actions\SaveTempFile;

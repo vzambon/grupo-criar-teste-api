@@ -23,13 +23,15 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
+            "App\\": "src/App/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Geolocations\\": "app/Domains/Geolocations",
-            "Products\\": "app/Domains/Products",
-            "Campaigns\\": "app/Domains/Campaigns",
-            "Users\\": "app/Domains/Users"
+            "Domain\\": "src/Domain",
+            "Support\\": "src/Support",
+            "Geolocations\\": "src/Domain/Geolocations",
+            "Products\\": "src/Domain/Products",
+            "Campaigns\\": "src/Domain/Campaigns",
+            "Users\\": "src/Domain/Users"
         }
     },
     "autoload-dev": {

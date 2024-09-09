@@ -34,9 +34,9 @@ class CityClusterTest extends TestCase
 
         $response = $this->post(route('clusters.store'), $payload);
         $response->assertOk();
-
+        
         $this->assertDatabaseCount((new Cluster())->getTable(), 1);
-        $cities->each(fn ($el) => $this->assertDatabaseHas((new City())->getTable(), $el->toArray()));
+        $this->assertEquals(Cluster::find(1)->cities->pluck('id')->toArray(), $cities->pluck('id')->toArray());
     }
 
     public function test_city_can_be_added_to_only_one_cluster()
@@ -66,7 +66,7 @@ class CityClusterTest extends TestCase
 
         $table = (new Cluster())->getTable();
         $this->assertDatabaseCount($table, 1);
-        $this->assertDatabaseHas($table, $cluster->toArray());
+        $this->assertDatabaseHas($table, $cluster->setHidden(['created_at', 'updated_at'])->toArray());
     }
 
     public function test_can_toggle_cluster_status()

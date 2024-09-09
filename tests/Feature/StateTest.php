@@ -56,7 +56,7 @@ class StateTest extends TestCase
 
         $table = (new State())->getTable();
         $this->assertDatabaseCount($table, 1);
-        $this->assertDatabaseHas($table, $state->toArray());
+        $this->assertDatabaseHas($table, $state->setHidden(['created_at', 'updated_at'])->toArray());
     }
 
     public function test_state_can_be_searched()

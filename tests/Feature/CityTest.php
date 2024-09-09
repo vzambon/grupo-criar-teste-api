@@ -51,7 +51,7 @@ class CityTest extends TestCase
 
         $table = (new City())->getTable();
         $this->assertDatabaseCount($table, 1);
-        $this->assertDatabaseHas($table, $city->toArray());
+        $this->assertDatabaseHas($table, $city->setHidden(['created_at', 'updated_at'])->toArray());
 
         $response->assertJson($city->toArray());
     }

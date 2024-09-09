@@ -44,6 +44,8 @@ class StateTest extends TestCase
 
     public function test_state_can_be_shown()
     {
+        State::removeAllFromSearch();
+
         $state = State::factory()->create();
 
         $response = $this->getJson(route('states.show', ['state' => $state->id]));
@@ -61,7 +63,7 @@ class StateTest extends TestCase
     {
         $states = State::factory(10)->create();
 
-        $states->each(fn($el) => $el->searchable());
+        $states->searchable();
 
         $response = $this->get(route('states.index', [
             'search' => [

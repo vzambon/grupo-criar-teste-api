@@ -76,7 +76,7 @@ class StateTest extends TestCase
         $response->assertJsonFragment($states->first()->toArray());
     }
 
-    public function test_can_inncativate_state()
+    public function test_can_toggle_state_status()
     {
         $stateTrue = State::factory()->state(['is_active' => true])->create();
         $stateFalse = State::factory()->state(['is_active' => false])->create();

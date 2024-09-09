@@ -34,12 +34,4 @@ class CityController extends Controller
 
         return response()->json(['message' => 'City status updated successfully!']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

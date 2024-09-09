@@ -18,18 +18,17 @@ abstract class Controller
             $query->select(explode(',', $select));
         }
 
-        $searchTermKeys = [];
+        $searchTerm = collect([]);
         foreach ($search as $key => $value) {
             if (collect($model::getSearchable())->contains($key)) {
-                $searchTermKeys[] = $key;
+                $searchTerm = $searchTerm->merge($search);
                 continue;
             }
 
             $query->where($key, $value);
         }
-
-        if (! empty($searchTermKeys)) {
-            $query->searchByFields($searchTermKeys, collect($searchTermKeys)->map(fn ($el) => $request->input($el))->toArray());
+        if (!$searchTerm->isEmpty()) {
+            $query->searchByFields($searchTerm->keys()->toArray(), $searchTerm->values()->toArray());
         }
 
         if($pagination) {

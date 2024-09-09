@@ -44,6 +44,8 @@ class StateTest extends TestCase
 
     public function test_state_can_be_shown()
     {
+        State::removeAllFromSearch();
+
         $state = State::factory()->create();
 
         $response = $this->getJson(route('states.show', ['state' => $state->id]));
@@ -61,7 +63,7 @@ class StateTest extends TestCase
     {
         $states = State::factory(10)->create();
 
-        $states->each(fn($el) => $el->searchable());
+        $states->searchable();
 
         $response = $this->get(route('states.index', [
             'search' => [
@@ -74,7 +76,7 @@ class StateTest extends TestCase
         $response->assertJsonFragment($states->first()->toArray());
     }
 
-    public function test_can_inncativate_state()
+    public function test_can_toggle_state_status()
     {
         $stateTrue = State::factory()->state(['is_active' => true])->create();
         $stateFalse = State::factory()->state(['is_active' => false])->create();

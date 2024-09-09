@@ -56,6 +56,21 @@ return [
             'throw' => false,
         ],
 
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/temp'),
+            'url' => env('APP_URL').'/temp',
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
+        'private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'url' => env('APP_URL').'/private',
+            'visibility' => 'private',
+            'throw' => false,
+        ],
     ],
 
     /*

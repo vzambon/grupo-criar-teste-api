@@ -59,19 +59,21 @@ class CityTest extends TestCase
 
     public function test_city_can_be_searched()
     {
-        $city = City::factory()->for(State::factory())->create();
+        City::removeAllFromSearch();
 
-        $city->searchable();
+        $cities = City::factory(10)->for(State::factory())->create();
+
+        $cities->searchable();
 
         $response = $this->get(route('cities.index', [
             'search' => [
-                'name' => $city->name,
+                'name' => $cities->first()->name,
             ]
         ]));
 
         $response->assertOk();
 
-        $response->assertJsonFragment($city->toArray());
+        $response->assertJsonFragment($cities->first()->toArray());
     }
 
     public function test_can_toggle_city_status()

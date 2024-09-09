@@ -96,11 +96,10 @@ class CityClusterTest extends TestCase
     {
         $cluster = Cluster::factory()->create();
 
-        $response = $this->delete(route('clusters.destroy', ['cluster' => $cluster->id]));
+        $response = $this->delete(route('clusters.destroy', ['id' => $cluster->id]));
 
         $response->assertOk();
 
         $this->assertDatabaseEmpty((new Cluster)->getTable());
     }
-
 }

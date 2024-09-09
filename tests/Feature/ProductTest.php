@@ -66,11 +66,42 @@ class ProductTest extends TestCase
 
     public function test_can_update_product()
     {
+        Storage::fake('temp');
+        Storage::fake('private');
         
+        $file = UploadedFile::fake()->image('mock_image.png');
+
+        $file_path = 'products/img/'.$file->getFilename();
+        Storage::disk('private')->put($file_path, $file);
+        Storage::disk('temp')->put($file->getFilename(), $file);
+        
+        $product = Product::factory()->state(['image_url' => $file_path])->create();
+
+        $payload = [
+            'name' => $this->faker->name,
+            'price' => $this->faker->randomFloat(2, 10, 1000),
+            'description' => $this->faker->text(),
+            'image_url' => $file->getFilename()
+        ];
+
+        $response = $this->put(route('products.update', ['product' => $product->id]), $payload);
+        $response->assertOk();
+
+        $this->assertEquals($response->json()['name'], $payload['name']);
+        $this->assertEquals($response->json()['price'], $payload['price']);
+        $this->assertEquals($response->json()['description'], $payload['description']);
+        $this->assertDatabaseHas((new Product())->getTable(), $response->json());
+        $this->assertDatabaseMissing((new Product())->getTable(), $product->toArray());
     }
 
     public function test_can_delete_product()
     {
-        //...
+        $product = Product::factory()->create();
+
+        $response = $this->delete(route('products.destroy', ['id' => $product->id]));
+
+        $response->assertOk();
+
+        $this->assertDatabaseEmpty((new Product)->getTable());
     }
 }

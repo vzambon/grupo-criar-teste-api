@@ -102,5 +102,4 @@ class CityClusterTest extends TestCase
 
         $this->assertDatabaseEmpty((new Cluster)->getTable());
     }
-
 }

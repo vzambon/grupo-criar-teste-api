@@ -2,7 +2,6 @@
 
 namespace App\Web\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PrivateStorageAccessController extends Controller

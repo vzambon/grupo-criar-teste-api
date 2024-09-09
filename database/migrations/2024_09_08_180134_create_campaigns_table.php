@@ -13,6 +13,8 @@ return new class () extends Migration {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->double('discount_value')->default(0.00);
+            $table->double('discount_percentage')->default(0.00);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

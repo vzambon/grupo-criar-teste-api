@@ -20,7 +20,7 @@ abstract class Controller
 
         $searchTerm = collect([]);
         foreach ($search as $key => $value) {
-            if (collect($model::getSearchable())->contains($key)) {
+            if (method_exists($model, 'getSearchable') && collect($model::getSearchable())->contains($key)) {
                 $searchTerm = $searchTerm->merge($search);
 
                 continue;

@@ -14,9 +14,6 @@ return new class () extends Migration {
     {
         Schema::create('campaign_product_pivot', function (Blueprint $table) {
             $table->id();
-            $table->double('discount_value');
-            $table->double('discount_percentage');
-            $table->double('final_price');
             $table->foreignIdFor(Campaign::class);
             $table->foreignIdFor(Product::class);
             $table->timestamps();

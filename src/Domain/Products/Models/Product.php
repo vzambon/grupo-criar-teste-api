@@ -33,6 +33,6 @@ class Product extends Model
 
     public function campaigns(): BelongsToMany
     {
-        return $this->belongsToMany(Campaign::class)->using(CampaignProduct::class);
+        return $this->belongsToMany(Campaign::class, 'campaign_product_pivot');
     }
 }

@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignIdFor(Cluster::class);
             $table->foreignIdFor(Campaign::class);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

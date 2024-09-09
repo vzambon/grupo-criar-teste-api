@@ -20,7 +20,7 @@ class Campaign extends Model
 
     public function cluster(): BelongsTo
     {
-        return $this->belongsTo(Cluster::class)->using(ClusterCampaign::class);
+        return $this->belongsTo(Cluster::class, 'cluster_campaign_pivot');
     }
 
     public function products(): BelongsToMany

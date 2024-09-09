@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
 
 class City extends Model
@@ -55,8 +56,8 @@ class City extends Model
         return $this->belongsTo(State::class);
     }
 
-    public function cluster(): BelongsTo
+    public function cluster(): BelongsToMany
     {
-        return $this->belongsTo(Cluster::class);
+        return $this->belongsToMany(Cluster::class, 'city_cluster_pivot')->using(CityCluster::class);
     }
 }

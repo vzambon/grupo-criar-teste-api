@@ -3,7 +3,7 @@
 namespace Support\Builders;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use MeiliSearch\Client;
+use Meilisearch\Client;
 
 class MeiliBuilder extends EloquentBuilder
 {

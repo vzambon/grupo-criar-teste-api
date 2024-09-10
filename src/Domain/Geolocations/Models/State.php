@@ -22,7 +22,7 @@ class State extends Model
         'is_active',
     ];
 
-    protected $searchable = [
+    protected static $searchable = [
         'acronym',
         'name',
     ];

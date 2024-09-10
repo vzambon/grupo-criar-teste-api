@@ -1,66 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Grupo Criar - Desafio Web Back-End
+##### Vaga: Desenvolvedor Backend
+#####  Área: Desenvolvimento de Software (Web)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição
+Este projeto é uma API RESTful desenvolvida em Laravel como parte do desafio proposto pelo Grupo CRIAR para a vaga de Desenvolvedor Backend. A aplicação permite o gerenciamento de estados, cidades, grupos de cidades (clusters), campanhas e produtos, com funcionalidades de criação, edição, exclusão e listagem.
 
-## About Laravel
+O projeto foi construído utilizando Docker Compose para facilitar a configuração e execução do ambiente de desenvolvimento. Em conjunto com uma serie de Shell scripts para automação do processo de instalação e deploy local do projeto.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias Utilizadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Docker** e **Docker Compose** (Ambiente de desenvolvimento)
+-   **PHP** (Laravel Framework)
+-   **Swoole** (Laravel Octane)
+-   **MySQL**  (Banco de dados relacional)
+-   **Redis** (Caching, Session e Queues)
+-   **Meilisearch** (Indexação para Full Text Search)
 
-## Learning Laravel
+## Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para executar o projeto há scripts convenientes para instação e execução.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Instalando o projeto:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    cd docker/local && ./install.sh --app-name=grupo-criar-api
 
-## Laravel Sponsors
+Após a instalação inicial, as execuções posteriores serão feitas usando:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    cd docker/local && ./start.sh
 
-### Premium Partners
+Para fins de simuação mais próxima possível de um ambiente de produção, o servidor nginx está configurado para uso de subdomínios localhost:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- http://web.localhost.com
+- http://api.localhost.com
 
-## Contributing
+Então é necessário adicionar esses domínios ao `/etc/hosts` da maquina host:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    echo -e "127.0.0.1 api.localhost.com\n127.0.0.1 web.localhost.com" | sudo tee -a /etc/hosts
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Endpoints
 
-## Security Vulnerabilities
+A REST Api possui os seguintes endpoints:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Método | Url | Name | 
+|--|--|--|
+| `GET`    | api/campaigns           			| campaigns.index 		  |
+| `POST`   | api/campaigns            			| campaigns.store 		  |
+| `GET`    | api/campaigns/{campaign} 			| campaigns.show  		  |
+| `PATCH`  | api/campaigns/{campaign} 			| campaigns.toggle-status |
+| `DELETE` | api/campaigns/{id} 	 			| campaigns.destroy       |
+| `GET`    | api/cities 			 			| cities.index 			  |
+| `GET`    | api/cities/{city} 		 			| cities.show			  |
+| `PATCH`  | api/cities/{city} 		 			| cities.toggle-status    |
+| `GET`    | api/clusters 						| clusters.index		  |
+| `POST`   | api/clusters 			 			| clusters.store		  |
+| `GET`    | api/clusters/{cluster}  			| clusters.show			  |
+| `POST`   | api/clusters 			  			| clusters.store		  |
+| `PATCH`  | api/clusters/{cluster}   			| clusters.toggle-status  |
+| `GET`    | api/clusters/{cluster}/campaings   | clusters.campains		  |
+| `DELETE` | api/clusters/{id}  				| clusters.destroy		  |
+| `GET`    | api/products   					| products.index		  |
+| `POST`   | api/products   					| products.store		  |
+| `DELETE` | api/products/{id}  				| products.destroy		  |
+| `GET`    | api/products/{product}   			| products.show	     	  |
+| `PUT`    | api/products/{product}   			| products.update	      |
+| `PATCH`  | api/products/{product}   			| products.toggle-status  |
+| `GET`    | api/products/{product}   			| products.show	     	  |
+| `GET`    | api/products/{product}   			| products.show	     	  |
+| `GET`    | api/states 			 			| states.index 			  |
+| `GET`    | api/states/{state} 		 		| states.show			  |
+| `PATCH`  | api/states/{state} 		 		| states.toggle-status    |
 
-## License
+Rotas Web auxiliares do sistema:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Método | Url | Name | 
+|--|--|--|
+| `GET`    | private-storage/{disk}/{filePath} | private-storage     |
+| `GET`    | sanctum/csrf-cookie 			   | sanctum.csrf-cookie |
+| `GET`    | up 							   |  					 |
+
+## Documentação - Scrumble (Laravel OpenAPI)
+
+A documentação desse projeto está disponível através do [Scramble](https://scramble.dedoc.co/), um pacote de geração automática de documentação OpenAPI (Swagger).
+
+Acessível em:
+
+    http://web.localhost.com/docs/api
+
+## Estrutura do projeto
+
+Apesar do projeto ter uma natureza simples, foi desenvolvido pensando em conceitos DDD para fins de demonstração.
+
+![enter image description here](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/grupo-criar-tree.png?token=GHSAT0AAAAAACWBBXKKJJL4I23UO3SV5CLUZW7VUIQ)
+
+
+## Tests
+
+O projeto foi desenvolvido em TDD, então possui um conjunto de testes garantindo a integridade das regras de negócio. Para executá-los, basta rodar o comando artisan:
+
+    php artisan test
+

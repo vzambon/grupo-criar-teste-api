@@ -4,7 +4,6 @@ namespace App\Api\Controllers;
 
 use App\Api\Requests\CampaignStoreRequest;
 use Campaigns\Models\Campaign;
-use Geolocations\Models\Cluster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,14 +22,14 @@ class CampaignController extends Controller
      */
     public function store(CampaignStoreRequest $request)
     {
-        DB::transaction(function() use($request) {
+        DB::transaction(function () use ($request) {
             $campaing = Campaign::create($request->except(['clusters']));
 
             DB::table('cluster_campaign_pivot')->update(['is_active' => false]);
 
-            $campaing->clusters()->syncWithoutDetaching($request->input('clusters'));        
+            $campaing->clusters()->syncWithoutDetaching($request->input('clusters'));
         });
-    
+
         return response()->json(['message' => 'Cluster created successfully']);
     }
 

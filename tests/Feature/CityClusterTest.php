@@ -34,7 +34,7 @@ class CityClusterTest extends TestCase
 
         $response = $this->post(route('clusters.store'), $payload);
         $response->assertOk();
-        
+
         $this->assertDatabaseCount((new Cluster())->getTable(), 1);
         $this->assertEquals(Cluster::find(1)->cities->pluck('id')->toArray(), $cities->pluck('id')->toArray());
     }

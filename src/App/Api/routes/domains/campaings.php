@@ -13,4 +13,3 @@ Route::prefix('campaigns')
         Route::patch('{campaign}', 'toggleStatus')->name('.toggle-status');
         Route::delete('{id}', 'destroy')->name('.destroy');
     });
-

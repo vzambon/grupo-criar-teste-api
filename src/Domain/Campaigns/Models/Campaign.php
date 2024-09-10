@@ -43,14 +43,14 @@ class Campaign extends Model
     public function price(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->products->pluck('price')->reduce(fn($carry, $item) => $carry+$item, 0)
+            get: fn () => $this->products->pluck('price')->reduce(fn ($carry, $item) => $carry + $item, 0)
         );
     }
 
     public function finalPrice(): Attribute
     {
         return Attribute::make(
-            get: fn() => round(($this->price * (1 - $this->discount_percentage/100)) - $this->discount_value, 2)
+            get: fn () => round(($this->price * (1 - $this->discount_percentage / 100)) - $this->discount_value, 2)
         );
     }
 

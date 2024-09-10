@@ -75,11 +75,13 @@ class CampaignTest extends TestCase
     {
         $campaignTrue = Campaign::factory()
         ->state(['is_active' => true])
-        ->create();;
+        ->create();
+        ;
         $campaignFalse = Campaign::factory()
         ->state(['is_active' => false])
-        ->create();;
-        
+        ->create();
+        ;
+
         $response1 = $this->patch(route('campaigns.toggle-status', ['campaign' => $campaignTrue->id]));
         $response2 = $this->patch(route('campaigns.toggle-status', ['campaign' => $campaignFalse->id]));
 
@@ -100,7 +102,8 @@ class CampaignTest extends TestCase
 
     public function test_can_delete_campaign()
     {
-        $campaign = Campaign::factory()->create();;
+        $campaign = Campaign::factory()->create();
+        ;
 
         $response = $this->delete(route('campaigns.destroy', ['id' => $campaign->id]));
 

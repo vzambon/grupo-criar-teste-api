@@ -22,9 +22,7 @@ class Product extends Model
         'image_url',
     ];
 
-    protected $hidden = ['image_url'];
-
-    protected $appends = ['img_url'];
+    protected $appends = ['img_access_url'];
 
     /**
      * Create a new factory instance for the model.
@@ -36,10 +34,10 @@ class Product extends Model
 
     /* ===== ATTRIBUTES ====== */
 
-    public function imgUrl(): Attribute
+    public function imgAccessUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => URL::signedRoute('private-storage', ['disk' => 'private', 'filePath' => $this->image_url], null, false)
+            get: fn () => !$this->image_url ?: URL::signedRoute('private-storage', ['disk' => 'private', 'filePath' => $this->image_url], null, false)
         );
     }
 

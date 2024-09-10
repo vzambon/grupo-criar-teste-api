@@ -47,7 +47,7 @@ class ProductTest extends TestCase
 
         $table = (new Product())->getTable();
         $this->assertDatabaseCount($table, 1);
-        $this->assertDatabaseHas($table, $response->collect()->forget(['created_at', 'updated_at'])->toArray());
+        $this->assertDatabaseHas($table, $response->collect()->forget(['created_at', 'updated_at', 'img_access_url'])->toArray());
     }
 
     public function test_product_can_be_shown()
@@ -59,7 +59,7 @@ class ProductTest extends TestCase
 
         $table = (new product())->getTable();
         $this->assertDatabaseCount($table, 1);
-        $this->assertDatabaseHas($table, $product->setHidden(['created_at', 'updated_at'])->toArray());
+        $this->assertDatabaseHas($table, $product->setHidden(['created_at', 'updated_at', 'img_access_url'])->toArray());
 
         $response->assertJson($product->toArray());
     }
@@ -90,7 +90,7 @@ class ProductTest extends TestCase
         $this->assertEquals($response->json()['name'], $payload['name']);
         $this->assertEquals($response->json()['price'], $payload['price']);
         $this->assertEquals($response->json()['description'], $payload['description']);
-        $this->assertDatabaseHas((new Product())->getTable(), $response->collect()->forget(['created_at', 'updated_at'])->toArray());
+        $this->assertDatabaseHas((new Product())->getTable(), $response->collect()->forget(['created_at', 'updated_at', 'img_access_url'])->toArray());
         $this->assertDatabaseMissing((new Product())->getTable(), $product->toArray());
     }
 

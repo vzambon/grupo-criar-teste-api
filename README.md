@@ -92,7 +92,7 @@ Acessível em:
 
 Apesar do projeto ter uma natureza simples, foi desenvolvido pensando em conceitos DDD para fins de demonstração.
 
-![enter image description here](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/grupo-criar-tree.png?token=GHSAT0AAAAAACWBBXKKJJL4I23UO3SV5CLUZW7VUIQ)
+![enter image description here](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/grupo-criar-tree.png)
 
 
 ## Tests

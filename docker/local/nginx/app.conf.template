@@ -38,7 +38,7 @@ server {
     error_log  /var/log/nginx/web.localhost.com.log error;
 
     location /api/ {
-        return 403;  # Return a Forbidden error
+        rewrite ^/api/(.*)$ http://api.localhost.com/$1 permanent;
     }
 
     location / {

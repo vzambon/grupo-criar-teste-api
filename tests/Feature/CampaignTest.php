@@ -66,21 +66,21 @@ class CampaignTest extends TestCase
 
         $response->assertOk();
 
-        $table = (new Campaign())->getTable();
-        $this->assertDatabaseCount($table, 2);
+        $this->assertDatabaseCount((new Campaign())->getTable(), 2);
+        $this->assertCount(2, Cluster::find(1)->campaigns()->get());
         $this->assertCount(1, Cluster::find(1)->campaigns()->wherePivot('is_active', true)->get());
     }
 
     public function test_can_toggle_campaign_status()
     {
         $campaignTrue = Campaign::factory()
-        ->state(['is_active' => true])
-        ->create();
-        ;
+            ->state(['is_active' => true])
+            ->create();
+
         $campaignFalse = Campaign::factory()
-        ->state(['is_active' => false])
-        ->create();
-        ;
+            ->state(['is_active' => false])
+            ->create();
+
 
         $response1 = $this->patch(route('campaigns.toggle-status', ['campaign' => $campaignTrue->id]));
         $response2 = $this->patch(route('campaigns.toggle-status', ['campaign' => $campaignFalse->id]));
@@ -103,7 +103,6 @@ class CampaignTest extends TestCase
     public function test_can_delete_campaign()
     {
         $campaign = Campaign::factory()->create();
-        ;
 
         $response = $this->delete(route('campaigns.destroy', ['id' => $campaign->id]));
 

@@ -92,7 +92,7 @@ Acessível em:
 
 Apesar do projeto ter uma natureza simples, foi desenvolvido pensando em conceitos DDD para fins de demonstração.
 
-![enter image description here](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/grupo-criar-tree.png)
+![project-tree](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/grupo-criar-tree.png)
 
 
 ## Tests
@@ -101,3 +101,4 @@ O projeto foi desenvolvido em TDD, então possui um conjunto de testes garantind
 
     php artisan test
 
+![tests](https://raw.githubusercontent.com/vzambon/grupo-criar-teste-api/assets/tests.png)

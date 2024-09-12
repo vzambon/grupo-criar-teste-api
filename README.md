@@ -71,6 +71,7 @@ A REST Api possui os seguintes endpoints:
 | `GET`    | api/states 			 			| states.index 			  |
 | `GET`    | api/states/{state} 		 		| states.show			  |
 | `PATCH`  | api/states/{state} 		 		| states.toggle-status    |
+| `POST`   | api/file-upload                    |                         |
 
 Rotas Web auxiliares do sistema:
 

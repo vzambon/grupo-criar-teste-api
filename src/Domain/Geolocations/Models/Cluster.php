@@ -36,7 +36,7 @@ class Cluster extends Model
     public function activeCampaign(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->campaigns()->wherePivot('is_active', true)->first()
+            get: fn () => $this->campaigns()->wherePivot('is_active', '=', true)->first()
         );
     }
 

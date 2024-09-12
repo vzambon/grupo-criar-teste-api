@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Campaigns\Models\Campaign;
 use Geolocations\Models\City;
 use Geolocations\Models\Cluster;
 use Geolocations\Models\State;
@@ -101,5 +102,20 @@ class CityClusterTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseEmpty((new Cluster())->getTable());
+    }
+
+    public function test_can_show_cluster_active_campaing()
+    {
+        $cluster = Cluster::factory()
+            ->has(City::factory(5)->for(State::factory()))
+            ->hasCampaign() // id: 1
+            ->hasCampaign(true) // id: 2 (Active Campaing)
+            ->create();
+
+        $response = $this->get(route('clusters.campaign', ['cluster' => $cluster->id]));
+
+        $response->assertOk();
+
+        $response->assertJson(['id' => 2]);
     }
 }

@@ -28,9 +28,9 @@ Route::prefix('clusters')
     ->controller(ClusterController::class)
     ->group(function () {
         Route::get('', 'index')->name('.index');
+        Route::get('{cluster}/campaign', 'showCampaign')->name('.campaign');
         Route::get('{cluster}', 'show')->name('.show');
         Route::patch('{cluster}', 'toggleStatus')->name('.toggle-status');
         Route::post('', 'store')->name('.store');
         Route::delete('{id}', 'destroy')->name('.destroy');
-        Route::get('{cluster}/campaings', 'listCampaings')->name('.campains');
     });

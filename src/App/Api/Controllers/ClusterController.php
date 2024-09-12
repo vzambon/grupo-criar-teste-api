@@ -57,4 +57,9 @@ class ClusterController extends Controller
 
         return response()->json(['message' => 'Cluster deleted successfully!']);
     }
+
+    public function showCampaign(Cluster $cluster)
+    {
+        return $cluster->active_campaign;
+    }
 }

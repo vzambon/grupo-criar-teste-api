@@ -13,7 +13,7 @@ class ClusterController extends Controller
      */
     public function index()
     {
-        return Cache::rememberForever('clusters', fn () => Cluster::all());
+        return Cluster::all();
     }
 
     /**

@@ -18,7 +18,7 @@ class ProductController
      */
     public function index()
     {
-        return Cache::rememberForever('products', fn () => Product::all());
+        return Product::all();
     }
 
     /**

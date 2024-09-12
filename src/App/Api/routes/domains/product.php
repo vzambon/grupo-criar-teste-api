@@ -7,10 +7,10 @@ Route::prefix('products')
     ->name('products')
     ->controller(ProductController::class)
     ->group(function () {
-        Route::get('', 'index')->name('.index');
+        Route::get('', 'index')->middleware('cached:products')->name('.index');
         Route::get('{product}', 'show')->name('.show');
-        Route::post('', 'store')->name('.store');
-        Route::put('{product}', 'update')->name('.update');
-        Route::patch('{product}', 'toggleStatus')->name('.toggle-status');
+        Route::post('', 'store')->middleware('cache-forget:products')->name('.store');
+        Route::put('{product}', 'update')->middleware('cache-forget:products')->name('.update');
+        Route::patch('{product}', 'toggleStatus')->middleware('cache-forget:products')->name('.toggle-status');
         Route::delete('{id}', 'destroy')->name('.destroy');
     });
